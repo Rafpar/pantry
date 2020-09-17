@@ -3,6 +3,39 @@
 {% load humanize %}
 {% block content %}
 
-<h1>index</h1>
+    <section id="showcase">
+        <div class="container text-center">
+            <div class="home-search p-5">
+                <div class="overlay p-5">
+                    <h1 class="display-4 mb-4">
+                        Hi please Login!
+                    </h1>
+                    <p class="lead">Govern, plan and browse your products in the pantry. Prepare shopping list for
+                        your periodic visit in the grocery!</p>
+                    <div class="login">
+                        <form action="#" method="post">
+                            {% csrf_token %}
+                            <!-- Form Row 1 -->
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3 offset-4">
+                                    <label class="sr-only">Username</label>
+                                    <input type="text" name="username" class="form-control"
+                                           placeholder="Username">
+                                </div>
+                            </div>
+                            <!-- Form Row 2 -->
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3 offset-4">
+                                    <label class="sr-only">City</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary col-md-4" type="submit">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
