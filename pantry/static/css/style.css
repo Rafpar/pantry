@@ -1,6 +1,12 @@
 .btn-secondary {
   color: #fff !important; }
 
+.btn-add {
+  color: #fff;
+  background-color: #29ab88;
+  border-color: #26a17f;
+}
+
 img {
   width: 100%; }
 
