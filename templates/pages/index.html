@@ -15,7 +15,7 @@
                     <p class="lead">Govern, plan and browse your products in the pantry. Prepare shopping list for
                         your periodic visit in the grocery!</p>
                     <div class="login">
-                        <form action="#" method="post">
+                        <form action="{% url 'login' %}" method="post">
                             {% csrf_token %}
                             <!-- Form Row 1 -->
                             <div class="form-row">

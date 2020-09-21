@@ -10,15 +10,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
-                <li
-                        {% if '/' == request.path %}
-                            class="nav-item active mr-3"
-                        {% else %}
-                            class="nav-item mr-3"
-                        {% endif %}
-                >
-                    <a class="nav-link" href="{% url 'index' %}">Home</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li {% if 'dashboard' in request.path %}
+                        class="nav-item active mr-3"
+                    {% else %}
+                        class="nav-item mr-3"
+                    {% endif %}
+                    >
+                        <a class="nav-link" href="{% url 'dashboard' %}">Pantry</a>
+                    </li>
+                {% else %}
+                    <li
+                            {% if '/' == request.path %}
+                                class="nav-item active mr-3"
+                            {% else %}
+                                class="nav-item mr-3"
+                            {% endif %}
+                    >
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                {% endif %}
                 <li
                         {% if 'about' in request.path %}
                             class="nav-item active mr-3"
@@ -45,7 +56,7 @@
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
-                        <form action="#" method="post" id="logout">
+                        <form action="{% url 'logout' %}" method="post" id="logout">
                             {% csrf_token %}
                             <input type="hidden">
                         </form>

@@ -16,38 +16,37 @@ def signup(request):
         return render(request, 'pages/index.html')
 
 
-# def login(request):
-#     if request.method == "POST":
-#         username = request.POST['username']
-#         password = request.POST['password']
-#
-#         user = auth.authenticate(username=username, password=password)
-#
-#         if user is not None:
-#             auth.login(request, user)
-#             messages.success(request, 'You are now logged in')
-#             return redirect('dashboard')
-#         else:
-#             messages.error(request, 'Invalid credentials')
-#             return redirect('login')
-#     else:
-#         return render(request, 'accounts/login.html')
+def login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are now logged in')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid credentials')
+            return redirect('index')
+    else:
+        return render(request, 'pages/index.html')
 
 
-# def logout(request):
-#     if request.method == "POST":
-#         auth.logout(request)
-#         messages.success(request, 'You are now logged out')
-#         return redirect('index')
-#
-#
-# def dashboard(request):
-#     user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
-#
-#     context = {
-#         'contacts': user_contacts
-#     }
-#     return render(request, 'accounts/dashboard.html', context)
+def logout(request):
+    if request.method == "POST":
+        auth.logout(request)
+        messages.success(request, 'You are now logged out')
+        return redirect('index')
+
+def dashboard(request):
+    # user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    #
+    # context = {
+    #     'contacts': user_contacts
+    # }
+    return render(request, 'accounts/dashboard.html')
 
 
 def validate_signup_form(request):
@@ -84,12 +83,13 @@ def save_user(request):
     user = User.objects.create_user(username=username, password=password,
                                     email=email, first_name=first_name,
                                     last_name=last_name)
-    # Login after register
-    # auth.login(request, user)
-    # messages.success(request, 'Yuo are now logged in')
-    # return redirect('index)
     user.save()
-    messages.success(request, 'You are now registered and can log in')
-    return redirect('index')
+    # Login after register
+    auth.login(request, user)
+    messages.success(request, 'Yuo are now logged in')
+    return redirect('dashboard')
+
+    #messages.success(request, 'You are now registered and can log in')
+    #return redirect('index')
 
 
