@@ -21,15 +21,103 @@
                aria-selected="false">Custom Products</a>
         </li>
         <li class="nav-item ml-auto">
-            <button class="btn btn-add mr-3" type="submit">+ Add Product</button>
+            <button class="btn btn-add mr-3" type="button" data-toggle="modal" data-target="#addProductModal">+ Add
+                Product
+            </button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="baseProducts" role="tabpanel" aria-labelledby="base-products-tab">
-            zzz
+            {% if products %}
+                <ul>
+                    {% for product in products %}
+                        {% if product.is_base_product %}
+                            <li>{{ product.product_name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="col-md-12">
+                    <p>No Products Available</p>
+                </div>
+            {% endif %}
         </div>
-        <div class="tab-pane fade" id="optionalProducts" role="tabpanel" aria-labelledby="optional-products-tab">lll
+        <div class="tab-pane fade" id="optionalProducts" role="tabpanel" aria-labelledby="optional-products-tab">
+            {% if products %}
+                <ul>
+                    {% for product in products %}
+                        {% if product.is_optional_product %}
+                            <li>{{ product.product_name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="col-md-12">
+                    <p>No Products Available</p>
+                </div>
+            {% endif %}
         </div>
-        <div class="tab-pane fade" id="customProducts" role="tabpanel" aria-labelledby="custom-products-tab">ppp</div>
+        <div class="tab-pane fade" id="customProducts" role="tabpanel" aria-labelledby="custom-products-tab">
+            {% if products %}
+                <ul>
+                    {% for product in products %}
+                        {% if product.is_custom_product %}
+                            <li>{{ product.product_name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="col-md-12">
+                    <p>No Products Available</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog"
+         aria-labelledby="addProductCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductLongTitle">Signup</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'product' %}" method="post" id="addProduct">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="product_name">Product Name</label>
+                            <input type="text" name="product_name" class="form-control" required>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="is_base_product" value="True"
+                                   id="isBaseProduct">
+                            <label class="form-check-label" for="isBaseProduct">Base product</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="is_optional_product" value="True"
+                                   id="isOptionalProduct">
+                            <label class="form-check-label" for="isBaseProduct">Optional product</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="is_custom_product" value="True"
+                                   id="isCustomProduct">
+                            <label class="form-check-label" for="isCustomProduct">Custom product</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="desired_amount">Desired amount</label>
+                            <input type="number" name="desired_amount" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close
+                    </button>
+                    <input type="submit" value="Add" form="addProduct" class="btn btn-secondary btn-block">
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

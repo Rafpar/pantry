@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 
+from products.models import Product
+
 
 def signup(request):
     if request.method == "POST":
@@ -40,13 +42,14 @@ def logout(request):
         messages.success(request, 'You are now logged out')
         return redirect('index')
 
+
 def dashboard(request):
-    # user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
-    #
-    # context = {
-    #     'contacts': user_contacts
-    # }
-    return render(request, 'accounts/dashboard.html')
+    products = Product.objects.all().filter(user_id=request.user.id)
+
+    context = {
+        'products': products
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
 
 def validate_signup_form(request):
