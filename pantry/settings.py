@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pantrydb',
         'USER': 'postgres',
-        'PASSWORD': 'Nienie33',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost'
     }
 }

@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.contrib import auth
+from django.shortcuts import render, redirect
 
 
 def index(request):
-    return render(request, 'pages/index.html')
+    if str(auth.get_user(request)) == 'AnonymousUser':
+        return render(request, 'pages/index.html')
+    else:
+        return redirect('dashboard')
 
 
 def about(request):

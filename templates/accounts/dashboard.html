@@ -6,19 +6,48 @@
     {% include 'partials/_alerts.html' %}
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="base-products-tab" data-toggle="tab" href="#baseProducts" role="tab"
+            <a class="nav-link
+                            {% if base_product_active or use_as_default_tab %}
+                                active
+                            {% endif %}"
+               id="base-products-tab" data-toggle="tab" href="#baseProducts" role="tab"
                aria-controls="baseProducts"
-               aria-selected="true">Base Products</a>
+               aria-selected="{% if base_product_active or use_as_default_tab %}
+                                    true
+                               {% else %}
+                                    false
+                               {% endif %}"
+            >Base Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="optional-products-tab" data-toggle="tab" href="#optionalProducts" role="tab"
+            <a class="nav-link
+                                {% if optional_product_active %}
+                                    active
+                                {% endif %}"
+               id="optional-products-tab"
+               data-toggle="tab" href="#optionalProducts" role="tab"
                aria-controls="optionalProducts"
-               aria-selected="false">Optional Products</a>
+               aria-selected="{% if optional_product_active %}
+                                    true
+                               {% else %}
+                                    false
+                               {% endif %}"
+            >Optional Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="custom-products-tab" data-toggle="tab" href="#customProducts" role="tab"
+            <a class="nav-link
+                               {% if custom_product_active %}
+                                    active
+                               {% endif %}"
+               id="custom-products-tab"
+               data-toggle="tab" href="#customProducts" role="tab"
                aria-controls="customProducts"
-               aria-selected="false">Custom Products</a>
+               aria-selected="{% if custom_product_active %}
+                                    true
+                               {% else %}
+                                    false
+                               {% endif %}">
+                Custom Products</a>
         </li>
         <li class="nav-item ml-auto">
             <button class="btn btn-add mr-3" type="button" data-toggle="modal" data-target="#addProductModal">+ Add
@@ -27,13 +56,15 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="baseProducts" role="tabpanel" aria-labelledby="base-products-tab">
-            {% if products %}
+        <div class="tab-pane fade
+                               {% if base_product_active or use_as_default_tab %}
+                                    show active
+                               {% endif %}"
+             id="baseProducts" role="tabpanel" aria-labelledby="base-products-tab">
+            {% if base_products %}
                 <ul>
-                    {% for product in products %}
-                        {% if product.is_base_product %}
-                            <li>{{ product.product_name }}</li>
-                        {% endif %}
+                    {% for product in base_products %}
+                        <li>{{ product.product_name }}</li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -42,13 +73,15 @@
                 </div>
             {% endif %}
         </div>
-        <div class="tab-pane fade" id="optionalProducts" role="tabpanel" aria-labelledby="optional-products-tab">
-            {% if products %}
+        <div class="tab-pane fade
+                               {% if optional_product_active %}
+                                    show active
+                               {% endif %}"
+             id="optionalProducts" role="tabpanel" aria-labelledby="optional-products-tab">
+            {% if optional_products %}
                 <ul>
-                    {% for product in products %}
-                        {% if product.is_optional_product %}
-                            <li>{{ product.product_name }}</li>
-                        {% endif %}
+                    {% for product in optional_products %}
+                        <li>{{ product.product_name }}</li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -57,13 +90,15 @@
                 </div>
             {% endif %}
         </div>
-        <div class="tab-pane fade" id="customProducts" role="tabpanel" aria-labelledby="custom-products-tab">
-            {% if products %}
+        <div class="tab-pane fade
+                               {% if custom_product_active %}
+                                    show active
+                               {% endif %}"
+             id="customProducts" role="tabpanel" aria-labelledby="custom-products-tab">
+            {% if custom_products %}
                 <ul>
-                    {% for product in products %}
-                        {% if product.is_custom_product %}
-                            <li>{{ product.product_name }}</li>
-                        {% endif %}
+                    {% for product in custom_products %}
+                        <li>{{ product.product_name }}</li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -79,7 +114,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductLongTitle">Signup</h5>
+                    <h5 class="modal-title" id="addProductLongTitle">Add Product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -90,6 +125,10 @@
                         <div class="form-group">
                             <label for="product_name">Product Name</label>
                             <input type="text" name="product_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="desired_amount">Desired amount</label>
+                            <input type="number" name="desired_amount" class="form-control" required>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" name="is_base_product" value="True"
@@ -105,10 +144,6 @@
                             <input type="checkbox" class="form-check-input" name="is_custom_product" value="True"
                                    id="isCustomProduct">
                             <label class="form-check-label" for="isCustomProduct">Custom product</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="desired_amount">Desired amount</label>
-                            <input type="number" name="desired_amount" class="form-control" required>
                         </div>
                     </form>
                 </div>

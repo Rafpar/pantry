@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 
 from products.models import Product
+from products.products_query import get_products_for
 
 
 def signup(request):
@@ -44,10 +45,15 @@ def logout(request):
 
 
 def dashboard(request):
-    products = Product.objects.all().filter(user_id=request.user.id)
+
+    products = get_products_for(request.user.id)
+    use_as_default_tab = True
 
     context = {
-        'products': products
+        'base_products': products['base_products'],
+        'optional_products': products['optional_products'],
+        'custom_products': products['custom_products'],
+        'use_as_default_tab': use_as_default_tab
     }
     return render(request, 'accounts/dashboard.html', context)
 

@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                    <li {% if 'dashboard' in request.path %}
+                    <li {% if 'dashboard' in request.path or 'product' in request.path %}
                         class="nav-item active mr-3"
                     {% else %}
                         class="nav-item mr-3"
@@ -43,7 +43,7 @@
 
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <li {% if 'dashboard' in request.path %}
+                    <li {% if 'dashboard' in request.path or 'about' in request.path or 'product' in request.path%}
                         class="nav-item active mr-3"
                     {% else %}
                         class="nav-item mr-3"
