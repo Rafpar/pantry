@@ -15,7 +15,9 @@ def product(request):
                           is_base_product=product_specification['is_base_product'],
                           is_optional_product=product_specification['is_optional_product'],
                           is_custom_product=product_specification['is_custom_product'],
-                          desired_amount=product_specification['desired_amount'])
+                          desired_amount=product_specification['desired_amount'],
+                          current_amount=product_specification['current_amount'],
+                          lacking_amount=product_specification['lacking_amount'])
 
         products = get_products_for(request.user.id)
 
@@ -50,13 +52,18 @@ def calculate_product_specification(request):
     if 'is_custom_product' in request.POST:
         is_custom_product = request.POST['is_custom_product']
     # product_img = request.POST['product_img']
+    desired_amount = request.POST['desired_amount']
+    current_amount = request.POST['current_amount']
+    lacking_amount = int(desired_amount) - int(current_amount) if int(current_amount) < int(desired_amount) else 0
     product_specification = {
         'user_id': request.user.id,
         'product_name': request.POST['product_name'],
         'is_base_product': is_base_product,
         'is_optional_product': is_optional_product,
         'is_custom_product': is_custom_product,
-        'desired_amount': request.POST['desired_amount']
+        'desired_amount': desired_amount,
+        'current_amount': current_amount,
+        'lacking_amount': lacking_amount
     }
     return product_specification
 
