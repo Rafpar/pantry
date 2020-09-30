@@ -61,51 +61,21 @@
                                     show active
                                {% endif %}"
              id="baseProducts" role="tabpanel" aria-labelledby="base-products-tab">
-            {% if base_products %}
-                <ul>
-                    {% for product in base_products %}
-                        <li>{{ product.product_name }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="col-md-12">
-                    <p>No Products Available</p>
-                </div>
-            {% endif %}
+            {% include 'products/base_products.html' %}
         </div>
         <div class="tab-pane fade
                                {% if optional_product_active %}
                                     show active
                                {% endif %}"
              id="optionalProducts" role="tabpanel" aria-labelledby="optional-products-tab">
-            {% if optional_products %}
-                <ul>
-                    {% for product in optional_products %}
-                        <li>{{ product.product_name }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="col-md-12">
-                    <p>No Products Available</p>
-                </div>
-            {% endif %}
+            {% include 'products/optional_products.html' %}
         </div>
         <div class="tab-pane fade
                                {% if custom_product_active %}
                                     show active
                                {% endif %}"
              id="customProducts" role="tabpanel" aria-labelledby="custom-products-tab">
-            {% if custom_products %}
-                <ul>
-                    {% for product in custom_products %}
-                        <li>{{ product.product_name }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <div class="col-md-12">
-                    <p>No Products Available</p>
-                </div>
-            {% endif %}
+            {% include 'products/custom_products.html' %}
         </div>
     </div>
 
