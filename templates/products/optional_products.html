@@ -48,8 +48,10 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{% url 'product' %}" method="post" id="editProduct">
+                                    <form action="{% url 'edit_product' product.id %}" method="post" id="editProduct{{ product.id }}">
                                         {% csrf_token %}
+                                        <input  hidden name="is_optional_product" class="form-control"
+                                                   value="{{ product.is_optional_product }}" required>
                                         <div class="form-group">
                                             <label for="desired_amount">Desired amount</label>
                                             <input type="number" name="desired_amount" class="form-control"
@@ -65,7 +67,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel
                                     </button>
-                                    <input type="submit" value="Save" form="addProduct"
+                                    <input type="submit" value="Save" form="editProduct{{ product.id }}"
                                            class="btn btn-secondary btn-block">
                                 </div>
                             </div>

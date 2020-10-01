@@ -1,11 +1,11 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 
 from products.models import Product
 from products.products_query import get_products_for
 
 
-def product(request):
+def save_product(request):
     if request.method == 'POST':
         product_specification = calculate_product_specification(request)
         product_list_names = calculate_product_list_names(product_specification)
@@ -41,6 +41,31 @@ def product(request):
         return render(request, 'accounts/dashboard.html', context)
 
 
+def edit_product(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        product.current_amount = request.POST['current_amount']
+        product.desired_amount = request.POST['desired_amount']
+        product.lacking_amount = calculate_lacking_amount_from(product.current_amount, product.desired_amount)
+        product.save()
+    products = get_products_for(request.user.id)
+    product_specification = calculate_product_specification(request)
+    context = {
+        'base_products': products['base_products'],
+        'optional_products': products['optional_products'],
+        'custom_products': products['custom_products'],
+        'base_product_active': product_specification['is_base_product'],
+        'optional_product_active': product_specification['is_optional_product'],
+        'custom_product_active': product_specification['is_custom_product']
+    }
+    return render(request, 'accounts/dashboard.html', context)
+
+
+def calculate_lacking_amount_from(current_amount, desired_amount):
+    return int(desired_amount) - int(current_amount) if int(current_amount) < int(
+        desired_amount) else 0
+
+
 def calculate_product_specification(request):
     is_base_product = False
     if 'is_base_product' in request.POST:
@@ -51,13 +76,16 @@ def calculate_product_specification(request):
     is_custom_product = False
     if 'is_custom_product' in request.POST:
         is_custom_product = request.POST['is_custom_product']
+    product_name = None
+    if 'product_name' in request.POST:
+        product_name = request.POST['product_name']
     # product_img = request.POST['product_img']
     desired_amount = request.POST['desired_amount']
     current_amount = request.POST['current_amount']
-    lacking_amount = int(desired_amount) - int(current_amount) if int(current_amount) < int(desired_amount) else 0
+    lacking_amount = calculate_lacking_amount_from(current_amount, desired_amount)
     product_specification = {
         'user_id': request.user.id,
-        'product_name': request.POST['product_name'],
+        'product_name': product_name,
         'is_base_product': is_base_product,
         'is_optional_product': is_optional_product,
         'is_custom_product': is_custom_product,
