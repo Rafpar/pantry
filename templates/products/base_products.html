@@ -5,12 +5,25 @@
             {% if base_products %}
                 {% for product in base_products %}
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card listing-preview">
+                        <div class="card listing-preview" id="cardId{{ product.id }}">
                             <img class="card-img-top" src="" alt="">
                             <div class="card-img-overlay">
-                                <h2>
-                                    <span class="badge badge-secondary text-white">{{ product.current_amount }}</span>
-                                </h2>
+                                <div style="clear: both">
+                                    <h2 style="float: left">
+                                        <span class="badge badge-secondary text-white">{{ product.current_amount }}</span>
+                                    </h2>
+                                    <form action="{% url 'edit_product_subtract' product.id %}#cardId{{ product.id }}"
+                                          method="post" id="subtract{{ product.id }}">
+                                        {% csrf_token %}
+                                        <input hidden name="is_base_product" class="form-control" value=True
+                                               required>
+                                    </form>
+                                    <h2 style="float: right">
+                                        <a href="javascript:{document.getElementById('subtract{{ product.id }}').submit()}">
+                                            <span class="fas fa-minus-square text-danger"></span>
+                                        </a>
+                                    </h2>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="listing-heading text-center">
@@ -36,28 +49,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="modalEdit{{product.id}}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="modalEdit{{ product.id }}" tabindex="-1" role="dialog"
                          aria-labelledby="editProductCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editProductLongTitle">Edit product {{ product.product_name }}</h5>
+                                    <h5 class="modal-title" id="editProductLongTitle">Edit
+                                        product {{ product.product_name }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{% url 'edit_product' product.id %}" method="post" id="editProduct{{ product.id }}">
+                                    <form action="{% url 'edit_product' product.id %}#cardId{{ product.id }}"
+                                          method="post"
+                                          id="editProduct{{ product.id }}">
                                         {% csrf_token %}
                                         <input hidden name="is_base_product" class="form-control"
-                                                   value="{{ product.is_base_product }}" required>
+                                               value="{{ product.is_base_product }}" required>
                                         <div class="form-group">
                                             <label for="desired_amount">Desired amount</label>
-                                            <input type="number" name="desired_amount" class="form-control" value="{{ product.desired_amount }}" required>
+                                            <input type="number" name="desired_amount" class="form-control"
+                                                   value="{{ product.desired_amount }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="desired_amount">Current amount</label>
-                                            <input type="number" name="current_amount" class="form-control" value="{{ product.current_amount }}" required>
+                                            <input type="number" name="current_amount" class="form-control"
+                                                   value="{{ product.current_amount }}" required>
                                         </div>
                                     </form>
                                 </div>

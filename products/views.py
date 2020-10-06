@@ -44,19 +44,21 @@ def save_product(request):
 def edit_product(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
-        product.current_amount = request.POST['current_amount']
-        product.desired_amount = request.POST['desired_amount']
+        if 'subtract' in request.path:
+            product.current_amount -= 1
+        else:
+            product.current_amount = request.POST['current_amount']
+            product.desired_amount = request.POST['desired_amount']
         product.lacking_amount = calculate_lacking_amount_from(product.current_amount, product.desired_amount)
         product.save()
     products = get_products_for(request.user.id)
-    product_specification = calculate_product_specification(request)
     context = {
         'base_products': products['base_products'],
         'optional_products': products['optional_products'],
         'custom_products': products['custom_products'],
-        'base_product_active': product_specification['is_base_product'],
-        'optional_product_active': product_specification['is_optional_product'],
-        'custom_product_active': product_specification['is_custom_product']
+        'base_product_active': True if 'is_base_product' in request.POST else False,
+        'optional_product_active': True if 'is_optional_product' in request.POST else False,
+        'custom_product_active': True if 'is_custom_product' in request.POST else False
     }
     return render(request, 'accounts/dashboard.html', context)
 
