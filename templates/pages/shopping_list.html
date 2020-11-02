@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block content %}
+    {% for product_list, products in product_lists.items %}
+        {% if product_list %}
+            <table class="table tableFixHead">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">{{ product_list }}</th>
+                    <th scope="col">product name</th>
+                    <th scope="col">lacking amount</th>
+                    <th scope="col">current amount</th>
+                    <th scope="col">desired amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.lacking_amount }}</td>
+                        <td>{{ product.current_amount }}</td>
+                        <td>{{ product.desired_amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

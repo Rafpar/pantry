@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 
 from products.models import Product
-from products.products_query import get_products_for
+from products.products_query import get_products_for, get_base_products_for, get_optional_products_for, \
+    get_custom_products_for
 
 
 def save_product(request):
@@ -39,6 +40,23 @@ def save_product(request):
             'use_as_default_tab': use_as_default_tab
         }
         return render(request, 'accounts/dashboard.html', context)
+
+
+def shopping_list(request):
+    product_lists = {}
+    if request.method == 'GET':
+        if 'is_base_product' in request.GET:
+            base_products = get_base_products_for(request.user.id)
+            product_lists['Base products'] = base_products
+        if 'is_optional_product' in request.GET:
+            optional_products = get_optional_products_for(request.user.id)
+            product_lists['Optional products'] = optional_products
+        if 'is_custom_product' in request.GET:
+            custom_products = get_custom_products_for(request.user.id)
+            product_lists['Custom products'] = custom_products
+
+        context = {'product_lists': product_lists}
+        return render(request, 'pages/shopping_list.html', context)
 
 
 def edit_product(request, product_id):

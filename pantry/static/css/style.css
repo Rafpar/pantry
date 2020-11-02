@@ -24,6 +24,7 @@ img {
   height: 28.5em;
   overflow-y:scroll;
 }
+.tableFixHead thead th { position: sticky; top: 4em; }
 
 #showcase {
   /*background: url(../img/showcase.jpg) no-repeat top center fixed/cover;*/
