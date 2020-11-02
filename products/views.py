@@ -68,7 +68,8 @@ def edit_product(request, product_id):
             product.current_amount = request.POST['current_amount']
             product.desired_amount = request.POST['desired_amount']
         product.lacking_amount = calculate_lacking_amount_from(product.current_amount, product.desired_amount)
-        product.save()
+        if int(product.current_amount) >= 0:
+            product.save()
     products = get_products_for(request.user.id)
     context = {
         'base_products': products['base_products'],
