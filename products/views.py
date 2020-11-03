@@ -46,15 +46,7 @@ def product_delete(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
         product.delete()
-    products = get_products_for(request.user.id)
-    context = {
-        'base_products': products['base_products'],
-        'optional_products': products['optional_products'],
-        'custom_products': products['custom_products'],
-        'base_product_active': True if 'is_base_product' in request.POST else False,
-        'optional_product_active': True if 'is_optional_product' in request.POST else False,
-        'custom_product_active': True if 'is_custom_product' in request.POST else False
-    }
+    context = prepare_products_context(request)
     return render(request, 'accounts/dashboard.html', context)
 
 
@@ -86,6 +78,11 @@ def edit_product(request, product_id):
         product.lacking_amount = calculate_lacking_amount_from(product.current_amount, product.desired_amount)
         if int(product.current_amount) >= 0:
             product.save()
+    context = prepare_products_context(request)
+    return render(request, 'accounts/dashboard.html', context)
+
+
+def prepare_products_context(request):
     products = get_products_for(request.user.id)
     context = {
         'base_products': products['base_products'],
@@ -95,7 +92,7 @@ def edit_product(request, product_id):
         'optional_product_active': True if 'is_optional_product' in request.POST else False,
         'custom_product_active': True if 'is_custom_product' in request.POST else False
     }
-    return render(request, 'accounts/dashboard.html', context)
+    return context
 
 
 def calculate_lacking_amount_from(current_amount, desired_amount):
