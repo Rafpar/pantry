@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from products.models import Product
 from products.products_query import get_products_for, get_base_products_for, get_optional_products_for, \
@@ -40,6 +40,22 @@ def save_product(request):
             'use_as_default_tab': use_as_default_tab
         }
         return render(request, 'accounts/dashboard.html', context)
+
+
+def product_delete(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        product.delete()
+    products = get_products_for(request.user.id)
+    context = {
+        'base_products': products['base_products'],
+        'optional_products': products['optional_products'],
+        'custom_products': products['custom_products'],
+        'base_product_active': True if 'is_base_product' in request.POST else False,
+        'optional_product_active': True if 'is_optional_product' in request.POST else False,
+        'custom_product_active': True if 'is_custom_product' in request.POST else False
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
 
 def shopping_list(request):
