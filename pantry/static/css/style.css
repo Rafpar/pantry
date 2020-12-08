@@ -1,10 +1,13 @@
 .btn-secondary {
-  color: #fff !important; }
+  color: #fff !important;
+  width: 100%;
+}
 
 .btn-add {
   color: #fff;
   background-color: #29ab88;
   border-color: #26a17f;
+  margin: 10px
 }
 
 img {
@@ -14,17 +17,35 @@ img {
   width: 40px; }
 
 .navbar {
-  opacity: 0.9;
   text-transform: uppercase; }
 
 .social a {
   margin-right: 0.4rem; }
 
-.tab-content-scrolling{
-  height: 28.5em;
-  overflow-y:scroll;
+/*below only example, this doesnt work well*/
+.tab-navbar-sticky{
+  position: sticky;
+  top: 5em;
+}
+.tab-navbar-margin{
+  margin-top: 1em;
 }
 .tableFixHead thead th { position: sticky; top: 4em; }
+
+.nav-link{
+  margin-top: 10px;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+footer{
+  margin-top: auto;
+}
 
 #showcase {
   /*background: url(../img/showcase.jpg) no-repeat top center fixed/cover;*/
