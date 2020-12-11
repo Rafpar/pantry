@@ -49,8 +49,7 @@ $(function () {
     $custom_checkbox = $("#isCustomProductShoppingList");
     $get_shopping_list_buton = $("#getShoppingList");
 
-    $base_checkbox.on('change', function ()
-    {
+    $base_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
             $get_shopping_list_buton.attr('disabled', false);
         } else {
@@ -58,8 +57,7 @@ $(function () {
         }
     });
 
-    $optional_checkbox.on('change', function ()
-    {
+    $optional_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
             $get_shopping_list_buton.attr('disabled', false);
         } else {
@@ -67,8 +65,7 @@ $(function () {
         }
     });
 
-    $custom_checkbox.on('change', function ()
-    {
+    $custom_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
             $get_shopping_list_buton.attr('disabled', false);
         } else {
@@ -77,7 +74,17 @@ $(function () {
     });
 
 
+});
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    var scrollpos = sessionStorage.getItem('scrollpos');
+    
+    if (scrollpos) {
+        window.scrollTo(0, scrollpos);
+        sessionStorage.removeItem('scrollpos');
+    }
+});
 
-
+window.addEventListener("pagehide", function (e) {
+    sessionStorage.setItem('scrollpos', window.scrollY);
 });

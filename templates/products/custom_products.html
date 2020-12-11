@@ -21,7 +21,7 @@
                                         <span class="fas fa-minus-square text-danger"></span>
                                     </a>
                                 </h2>
-                                <form action="{% url 'edit_product_subtract' product.id %}#cardId{{ product.id }}"
+                                <form action="{% url 'edit_product_subtract' product.id %}"
                                       method="post" id="subtract{{ product.id }}">
                                     {% csrf_token %}
                                     <input hidden name="is_custom_product" class="form-control" value=True required>
@@ -64,7 +64,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{% url 'edit_product' product.id %}#cardId{{ product.id }}"
+                                    <form action="{% url 'edit_product' product.id %}"
                                           method="post"
                                           id="editProduct{{ product.id }}">
                                         {% csrf_token %}
