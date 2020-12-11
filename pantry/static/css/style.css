@@ -42,6 +42,10 @@ img {
   border-bottom: 7px solid #205067;
 }
 
+.nav-tabs .nav-item{
+  margin-right: 0.7em;
+}
+
 body{
   display: flex;
   flex-direction: column;
