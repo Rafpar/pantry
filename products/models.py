@@ -8,7 +8,6 @@ class Product(models.Model):
     is_base_product = models.BooleanField(default=False)
     is_optional_product = models.BooleanField(default=False)
     is_custom_product = models.BooleanField(default=False)
-    product_img = models.ImageField(upload_to='img/products/', blank=True)
     desired_amount = models.IntegerField(default=0)
     current_amount = models.IntegerField(default=0)
     lacking_amount = models.IntegerField(default=0)

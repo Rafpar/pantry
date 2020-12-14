@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 
 from products.models import Product
 from products.products_query import get_products_for, get_base_products_for, get_optional_products_for, \
@@ -113,7 +113,6 @@ def calculate_product_specification(request):
     product_name = None
     if 'product_name' in request.POST:
         product_name = request.POST['product_name']
-    # product_img = request.POST['product_img']
     desired_amount = request.POST['desired_amount']
     current_amount = request.POST['current_amount']
     lacking_amount = calculate_lacking_amount_from(current_amount, desired_amount)
