@@ -25,13 +25,6 @@ DATABASES = {
 }
 ```
  
-Then create admin user
-
-```
-python manage.py createsuperuser
-```
-specify admin name, password and other details
-
 Perform migrations by:
 
 ```
@@ -39,6 +32,20 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 This will create migration scripts and update your local database with application models
+ 
+Then create admin user
+
+```
+python manage.py createsuperuser
+```
+specify admin name, password and other details
+
+Collect static files
+
+```
+python manage.py collectstatic
+```
+
 ## Usage
 
 Start application
