@@ -123,3 +123,10 @@ function clear_checkboxes() {
     $optional_checkbox.prop('checked', false)
     $custom_checkbox.prop('checked', false)
 }
+
+// cleanup modals after close
+$(document).ready(function() {
+    $('.modal').on('hidden.bs.modal', function(){
+        $(this).find('form')[0].reset();
+     });
+});
