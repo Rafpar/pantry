@@ -49,27 +49,33 @@ $(function () {
     $custom_checkbox = $("#isCustomProductShoppingList");
     $get_shopping_list_buton = $("#getShoppingList");
 
+    $baseProductsTab = $("#baseProducts");
+    $optionalProductsTab = $("#optionalProducts");
+    $customProductsTab = $("#customProducts");
+
+
+
     $base_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
-            $get_shopping_list_buton.attr('disabled', false);
+            $get_shopping_list_buton.prop('disabled', false);
         } else {
-            $get_shopping_list_buton.attr('disabled', true);
+            $get_shopping_list_buton.prop('disabled', true);
         }
     });
 
     $optional_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
-            $get_shopping_list_buton.attr('disabled', false);
+            $get_shopping_list_buton.prop('disabled', false);
         } else {
-            $get_shopping_list_buton.attr('disabled', true);
+            $get_shopping_list_buton.prop('disabled', true);
         }
     });
 
     $custom_checkbox.on('change', function () {
         if ($base_checkbox.is(':checked') || $optional_checkbox.is(':checked') || $custom_checkbox.is(':checked')) {
-            $get_shopping_list_buton.attr('disabled', false);
+            $get_shopping_list_buton.prop('disabled', false);
         } else {
-            $get_shopping_list_buton.attr('disabled', true);
+            $get_shopping_list_buton.prop('disabled', true);
         }
     });
 
@@ -78,7 +84,7 @@ $(function () {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     var scrollpos = sessionStorage.getItem('scrollpos');
-    
+
     if (scrollpos) {
         window.scrollTo(0, scrollpos);
         sessionStorage.removeItem('scrollpos');
@@ -88,3 +94,32 @@ document.addEventListener("DOMContentLoaded", function (event) {
 window.addEventListener("pagehide", function (e) {
     sessionStorage.setItem('scrollpos', window.scrollY);
 });
+
+function set_default_checkbox() {
+
+    $active_tab = $('.nav-tabs .active')
+    $active_tab_id = $active_tab.get(0).id
+
+    if ($active_tab_id === "base-products-tab") {
+        $base_checkbox.prop('checked', true)
+    } else {
+        $base_checkbox.prop('checked', false)
+    }
+    if ($active_tab_id === "optional-products-tab") {
+        $optional_checkbox.prop('checked', true)
+    } else {
+        $optional_checkbox.prop('checked', false)
+    }
+    if ($active_tab_id === "custom-products-tab") {
+        $custom_checkbox.prop('checked', true)
+    } else {
+        $custom_checkbox.prop('checked', false)
+    }
+    $get_shopping_list_buton.prop('disabled', false);
+}
+
+function clear_checkboxes() {
+    $base_checkbox.prop('checked', false)
+    $optional_checkbox.prop('checked', false)
+    $custom_checkbox.prop('checked', false)
+}
