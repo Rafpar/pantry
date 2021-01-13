@@ -87,7 +87,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductLongTitle">Add Product</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clear_add_product_checkboxes()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -124,9 +124,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="clear_add_product_checkboxes()">Close
                     </button>
-                    <input type="submit" value="Add" form="addProduct" class="btn btn-secondary btn-block">
+                    <input type="submit" id="addProductButton" value="Add" form="addProduct" class="btn btn-secondary btn-block">
                 </div>
             </div>
         </div>

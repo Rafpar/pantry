@@ -7,37 +7,46 @@ setTimeout(function () {
 
 // disable product checkboxes when one selected
 $(function () {
-    $base_checkbox = $("#isBaseProduct");
-    $optional_checkbox = $("#isOptionalProduct");
-    $custom_checkbox = $("#isCustomProduct");
+    $base_checkbox_add_product = $("#isBaseProduct");
+    $optional_checkbox_add_product = $("#isOptionalProduct");
+    $custom_checkbox_add_product = $("#isCustomProduct");
+    $add_product_button = $("#addProductButton");
 
-    $base_checkbox.on('change', function () {
-        if ($base_checkbox.is(':checked')) {
-            $optional_checkbox.attr('disabled', true);
-            $custom_checkbox.attr('disabled', true);
+    $add_product_button.prop('disabled', true)
+
+    $base_checkbox_add_product.on('change', function () {
+        if ($base_checkbox_add_product.is(':checked')) {
+            $optional_checkbox_add_product.prop('disabled', true);
+            $custom_checkbox_add_product.prop('disabled', true);
+            $add_product_button.prop('disabled', false)
         } else {
-            $optional_checkbox.attr('disabled', false);
-            $custom_checkbox.attr('disabled', false);
+            $optional_checkbox_add_product.prop('disabled', false);
+            $custom_checkbox_add_product.prop('disabled', false);
+            $add_product_button.prop('disabled', true)
         }
     });
 
-    $optional_checkbox.on('change', function () {
-        if ($optional_checkbox.is(':checked')) {
-            $base_checkbox.attr('disabled', true);
-            $custom_checkbox.attr('disabled', true);
+    $optional_checkbox_add_product.on('change', function () {
+        if ($optional_checkbox_add_product.is(':checked')) {
+            $base_checkbox_add_product.prop('disabled', true);
+            $custom_checkbox_add_product.prop('disabled', true);
+            $add_product_button.prop('disabled', false)
         } else {
-            $base_checkbox.attr('disabled', false);
-            $custom_checkbox.attr('disabled', false);
+            $base_checkbox_add_product.prop('disabled', false);
+            $custom_checkbox_add_product.prop('disabled', false);
+            $add_product_button.prop('disabled', true)
         }
     });
 
-    $custom_checkbox.on('change', function () {
-        if ($custom_checkbox.is(':checked')) {
-            $base_checkbox.attr('disabled', true);
-            $optional_checkbox.attr('disabled', true);
+    $custom_checkbox_add_product.on('change', function () {
+        if ($custom_checkbox_add_product.is(':checked')) {
+            $base_checkbox_add_product.prop('disabled', true);
+            $optional_checkbox_add_product.prop('disabled', true);
+            $add_product_button.prop('disabled', false)
         } else {
-            $base_checkbox.attr('disabled', false);
-            $optional_checkbox.attr('disabled', false);
+            $base_checkbox_add_product.prop('disabled', false);
+            $optional_checkbox_add_product.prop('disabled', false);
+            $add_product_button.prop('disabled', true)
         }
     });
 });
@@ -122,6 +131,16 @@ function clear_checkboxes() {
     $base_checkbox.prop('checked', false)
     $optional_checkbox.prop('checked', false)
     $custom_checkbox.prop('checked', false)
+}
+
+function clear_add_product_checkboxes() {
+    $base_checkbox_add_product.prop('checked', false)
+    $base_checkbox_add_product.prop('disabled', false)
+    $optional_checkbox_add_product.prop('checked', false)
+    $optional_checkbox_add_product.prop('disabled', false)
+    $custom_checkbox_add_product.prop('checked', false)
+    $custom_checkbox_add_product.prop('disabled', false)
+    $add_product_button.prop('disabled', true)
 }
 
 // cleanup modals after close
