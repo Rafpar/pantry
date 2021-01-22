@@ -1,4 +1,5 @@
 const date = new Date();
+const csrftoken = getCookie('csrftoken');
 document.querySelector('.year').innerHTML = date.getFullYear();
 
 setTimeout(function () {
@@ -61,7 +62,6 @@ $(function () {
     $baseProductsTab = $("#baseProducts");
     $optionalProductsTab = $("#optionalProducts");
     $customProductsTab = $("#customProducts");
-
 
 
     $base_checkbox.on('change', function () {
@@ -144,8 +144,44 @@ function clear_add_product_checkboxes() {
 }
 
 // cleanup modals after close
-$(document).ready(function() {
-    $('.modal').on('hidden.bs.modal', function(){
+$(document).ready(function () {
+    $('.modal').on('hidden.bs.modal', function () {
         $(this).find('form')[0].reset();
-     });
+    });
 });
+
+function remove_row(product_id) {
+    $productRow = $("#productRow" + product_id);
+    $productName = $productRow.get(0).cells.item(1).textContent;
+    if (confirm('Are you sure you want to update ' +  $productName +'?')){
+            $.ajax({
+        headers: {'X-CSRFToken': csrftoken},
+        url: 'update/current_amount/' + product_id,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
+            if (data.updated) {
+                $productRow.remove();
+            }
+        }
+    });
+    }
+
+
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

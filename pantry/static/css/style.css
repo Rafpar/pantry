@@ -64,6 +64,9 @@ body {
     flex: 1;
     min-height: 100vh;
 }
+.table td{
+   text-align: left;
+}
 
 .figure-img {
     margin-bottom: 0;
