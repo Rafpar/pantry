@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.contrib.auth import update_session_auth_hash
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -95,10 +95,56 @@ def save_user(request):
     user.save()
     # Login after register
     auth.login(request, user)
-    messages.success(request, 'Yuo are now logged in')
+    messages.success(request, 'You are now logged in')
     return redirect('dashboard')
 
-    #messages.success(request, 'You are now registered and can log in')
-    #return redirect('index')
+
+def account_info(request):
+    if request.method == "GET":
+        user = User.objects.get(username__exact=request.user.username)
+        context = {
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name
+        }
+        return render(request, 'accounts/account_info.html', context)
+
+
+def delete_account(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        user_id = user.id
+        user.delete()
+        user_products = Product.objects.all().filter(user_id=user_id)
+        user_products.delete()
+        auth.logout(request)
+        messages.success(request, 'Account has been removed')
+        return redirect('index')
+
+
+def change_password(request):
+    user = User.objects.get(username__exact=request.user.username)
+    if request.method == "POST":
+        if is_password_form_valid(request, user):
+            user.set_password(request.POST['new_password'])
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password has been successfully changed!')
+        return redirect('account_info')
+
+
+def is_password_form_valid(request, user):
+    valid = False
+    email = request.POST['email']
+    new_password = request.POST['new_password']
+    confirm_password = request.POST['confirm_password']
+    if email == user.email:
+        if new_password == confirm_password:
+            valid = True
+        else:
+            messages.error(request, 'Passwords do not match')
+    else:
+        messages.error(request, 'Incorrect email!')
+    return valid
 
 
