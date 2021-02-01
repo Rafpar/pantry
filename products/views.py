@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 from products.models import Product
@@ -80,6 +81,16 @@ def edit_product(request, product_id):
             product.save()
     context = prepare_products_context(request)
     return render(request, 'accounts/dashboard.html', context)
+
+
+def update_current_amount(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        product.current_amount = product.desired_amount
+        product.lacking_amount = 0
+        product.save()
+        data = {'updated': True}
+        return JsonResponse(data)
 
 
 def prepare_products_context(request):
