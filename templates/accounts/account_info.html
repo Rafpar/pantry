@@ -15,10 +15,10 @@
                     <form id="accountDeleteForm" method="POST" action="{% url 'delete_account' %}">
                         {% csrf_token %}
                         <button onclick="return confirm('Are you sure to delete an account?')"
-                                class="btn btn-danger mr-3" type="submit"
+                                class="btn btn-danger mr-3" style="margin-top: 5px" type="submit"
                                 data-target="#accountDeleteForm"> Delete account
                         </button>
-                        <button class="btn btn-warning mr-3" type="button" data-toggle="modal"
+                        <button class="btn btn-warning mr-3" style="margin-top: 5px" type="button" data-toggle="modal"
                                 data-target="#changePasswordModal">
                             Change password
                         </button>
