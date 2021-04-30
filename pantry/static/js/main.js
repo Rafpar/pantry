@@ -153,21 +153,19 @@ $(document).ready(function () {
 function remove_row(product_id) {
     $productRow = $("#productRow" + product_id);
     $productName = $productRow.get(0).cells.item(1).textContent;
-    if (confirm('Are you sure you want to update ' +  $productName +'?')){
-            $.ajax({
-        headers: {'X-CSRFToken': csrftoken},
-        url: 'update/current_amount/' + product_id,
-        type: 'POST',
-        dataType: 'json',
-        success: function (data) {
-            if (data.updated) {
-                $productRow.remove();
+    if (confirm('Are you sure you want to update ' + $productName + '?')) {
+        $.ajax({
+            headers: {'X-CSRFToken': csrftoken},
+            url: 'update/current_amount/' + product_id,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (data.updated) {
+                    $productRow.remove();
+                }
             }
-        }
-    });
+        });
     }
-
-
 }
 
 function getCookie(name) {
@@ -184,4 +182,23 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+// filter cards
+$(document).ready(function () {
+    $("#search-field").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $(".card").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $('.nav-item').on('click', function () {
+        cleanSearchField()
+    });
+});
+
+function cleanSearchField() {
+        var search_field = document.getElementById('search-field');
+        search_field.value = '';
+        $(".card").show();
 }
