@@ -188,9 +188,7 @@ function getCookie(name) {
 $(document).ready(function () {
     $("#search-field").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $(".card").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
+        $('.card-deck').find('.card-header h4:not(:contains("'+value+'"))').parent().parent().parent().addClass('d-none');
     });
     $('.nav-item').on('click', function () {
         cleanSearchField()
@@ -200,5 +198,5 @@ $(document).ready(function () {
 function cleanSearchField() {
         var search_field = document.getElementById('search-field');
         search_field.value = '';
-        $(".card").show();
+        $(".col-md-6").removeClass('d-none');
 }
