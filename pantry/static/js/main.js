@@ -187,8 +187,9 @@ function getCookie(name) {
 // filter cards
 $(document).ready(function () {
     $("#search-field").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $('.card-deck').find('.card-header h4:not(:contains("'+value+'"))').parent().parent().parent().addClass('d-none');
+        $(".col-md-6").removeClass('d-none');
+        var value = $(this).val()
+        $('.card').find('.card-header h4:not(:contains("'+value+'"))').parent().parent().parent().addClass('d-none');
     });
     $('.nav-item').on('click', function () {
         cleanSearchField()
@@ -200,3 +201,8 @@ function cleanSearchField() {
         search_field.value = '';
         $(".col-md-6").removeClass('d-none');
 }
+// override contains method to be case insensitive
+jQuery.expr[':'].contains = function(a, i, m) {
+  return jQuery(a).text().toUpperCase()
+      .indexOf(m[3].toUpperCase()) >= 0;
+};
