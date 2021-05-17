@@ -53,7 +53,7 @@
             <button onclick="set_default_checkbox()" class="btn btn-add mr-3" type="button" data-toggle="modal"
                     data-target="#shoppingListModal"><i class="fas fa-list"></i> Shopping list
             </button>
-            <button class="btn btn-add mr-3" type="button" data-toggle="modal" data-target="#addProductModal">+ Add
+            <button onclick="set_default_radio()" class="btn btn-add mr-3" type="button" data-toggle="modal" data-target="#addProductModal">+ Add
                 Product
             </button>
         </li>
@@ -69,7 +69,7 @@
         <div class="input-group-append">
             <button type="button" class="btn input-group-text" aria-label="Close"
                     onclick="cleanSearchField()">
-                <span >&times;</span>
+                <span>&times;</span>
             </button>
         </div>
 
@@ -104,8 +104,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductLongTitle">Add Product</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            onclick="clear_add_product_checkboxes()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -125,25 +124,25 @@
                             <input type="number" name="current_amount" class="form-control" required>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="is_base_product" value="True"
+                            <input type="radio" class="form-check-input" name="radio_product" value="is_base_product"
                                    id="isBaseProduct">
                             <label class="form-check-label" for="isBaseProduct">Base product</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="is_optional_product" value="True"
+                            <input type="radio" class="form-check-input" name="radio_product" value="is_optional_product"
                                    id="isOptionalProduct">
                             <label class="form-check-label" for="isOptionalProduct">Optional product</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="is_custom_product" value="True"
+                            <input type="radio" class="form-check-input" name="radio_product" value="is_custom_product"
                                    id="isCustomProduct">
                             <label class="form-check-label" for="isCustomProduct">Custom product</label>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            onclick="clear_add_product_checkboxes()">Close
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        Close
                     </button>
                     <input type="submit" id="addProductButton" value="Add" form="addProduct"
                            class="btn btn-secondary btn-block">

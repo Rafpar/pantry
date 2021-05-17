@@ -113,14 +113,15 @@ def calculate_lacking_amount_from(current_amount, desired_amount):
 
 def calculate_product_specification(request):
     is_base_product = False
-    if 'is_base_product' in request.POST:
-        is_base_product = request.POST['is_base_product']
     is_optional_product = False
-    if 'is_optional_product' in request.POST:
-        is_optional_product = request.POST['is_optional_product']
     is_custom_product = False
-    if 'is_custom_product' in request.POST:
-        is_custom_product = request.POST['is_custom_product']
+    if 'radio_product' in request.POST:
+        if 'is_base_product' == request.POST['radio_product']:
+            is_base_product = True
+        if 'is_optional_product' == request.POST['radio_product']:
+            is_optional_product = True
+        if 'is_custom_product' == request.POST['radio_product']:
+            is_custom_product = True
     product_name = None
     if 'product_name' in request.POST:
         product_name = request.POST['product_name']
