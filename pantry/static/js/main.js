@@ -6,51 +6,26 @@ setTimeout(function () {
     $('#message').slideUp();
 }, 3000);
 
-// disable product checkboxes when one selected
-$(function () {
-    $base_checkbox_add_product = $("#isBaseProduct");
-    $optional_checkbox_add_product = $("#isOptionalProduct");
-    $custom_checkbox_add_product = $("#isCustomProduct");
+
+function set_default_radio() {
+    $base_radio_add_product = $("#isBaseProduct");
+    $optional_cradio_add_product = $("#isOptionalProduct");
+    $custom_radio_add_product = $("#isCustomProduct");
     $add_product_button = $("#addProductButton");
 
-    $add_product_button.prop('disabled', true)
+    $active_tab = $('.nav-tabs .active')
+    $active_tab_id = $active_tab.get(0).id
 
-    $base_checkbox_add_product.on('change', function () {
-        if ($base_checkbox_add_product.is(':checked')) {
-            $optional_checkbox_add_product.prop('disabled', true);
-            $custom_checkbox_add_product.prop('disabled', true);
-            $add_product_button.prop('disabled', false)
-        } else {
-            $optional_checkbox_add_product.prop('disabled', false);
-            $custom_checkbox_add_product.prop('disabled', false);
-            $add_product_button.prop('disabled', true)
-        }
-    });
-
-    $optional_checkbox_add_product.on('change', function () {
-        if ($optional_checkbox_add_product.is(':checked')) {
-            $base_checkbox_add_product.prop('disabled', true);
-            $custom_checkbox_add_product.prop('disabled', true);
-            $add_product_button.prop('disabled', false)
-        } else {
-            $base_checkbox_add_product.prop('disabled', false);
-            $custom_checkbox_add_product.prop('disabled', false);
-            $add_product_button.prop('disabled', true)
-        }
-    });
-
-    $custom_checkbox_add_product.on('change', function () {
-        if ($custom_checkbox_add_product.is(':checked')) {
-            $base_checkbox_add_product.prop('disabled', true);
-            $optional_checkbox_add_product.prop('disabled', true);
-            $add_product_button.prop('disabled', false)
-        } else {
-            $base_checkbox_add_product.prop('disabled', false);
-            $optional_checkbox_add_product.prop('disabled', false);
-            $add_product_button.prop('disabled', true)
-        }
-    });
-});
+    if ($active_tab_id === "base-products-tab") {
+        $base_radio_add_product.prop('checked', true)
+    }
+    if ($active_tab_id === "optional-products-tab") {
+        $optional_cradio_add_product.prop('checked', true)
+    }
+    if ($active_tab_id === "custom-products-tab") {
+        $custom_radio_add_product.prop('checked', true)
+    }
+}
 
 // enable get shopping list button
 $(function () {
@@ -133,15 +108,6 @@ function clear_checkboxes() {
     $custom_checkbox.prop('checked', false)
 }
 
-function clear_add_product_checkboxes() {
-    $base_checkbox_add_product.prop('checked', false)
-    $base_checkbox_add_product.prop('disabled', false)
-    $optional_checkbox_add_product.prop('checked', false)
-    $optional_checkbox_add_product.prop('disabled', false)
-    $custom_checkbox_add_product.prop('checked', false)
-    $custom_checkbox_add_product.prop('disabled', false)
-    $add_product_button.prop('disabled', true)
-}
 
 // cleanup modals after close
 $(document).ready(function () {
