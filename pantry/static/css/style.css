@@ -137,6 +137,14 @@ footer {
     position: relative;
 }
 
+/*control collapse arrows*/
+a[aria-expanded=false] .fa-chevron-up {
+   display: none;
+}
+a[aria-expanded=true] .fa-chevron-down {
+   display: none;
+}
+
 @media (max-width: 991px) {
     #about {
         margin-left: -13.5%;
